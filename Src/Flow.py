@@ -1,3 +1,7 @@
+__author__ = 'lich'
+
+from Unit import *
+
 # This file describes the class Flow.
 # Any specific flow class should inherit from this class
 
@@ -37,8 +41,7 @@ class Flow:
 
         # Job Id: this flow may be contained by a job
         # Each flow is only contained by one job and one
-        # a job have many tasks, a task has many coflows,
-        # a coflow has many flows.
+        # a job have many tasks, a task has many coflows, a asdcoflow has many flows.
         self.jobId = 0
         self.taskId = 0
         self.coflowId = 0
@@ -46,34 +49,17 @@ class Flow:
         # Priority / Service
         self.priority = -1
 
-        # Deadline
-        self.deadline = -1
-        self.remainTime = -1
-        self.residualRate = -1.0
-
-        # Constant bit rate flows
-        self.cbr = False
-        self.transport = 'tcp'
-
     def SetFlowSize(self, size):
         self.flowSize = size
         self.remainSize = size
-
-    def SetFlowDeadline(self, ddl):
-        self.deadline = ddl
-        self.remainTime = ddl
-
-    def SerCBR(self, cbr):
-        self.bw = cbr
-        self.cbr = True
 
     # Routing with give a list of nodes that this flow traverses
     # BuildPath() builds a path with pathNodeIds[:]
     def BuildPath(self, pathNodeIds):
         # Build path in node ids
-        # self.pathNodeIds = pathNodeIds[:]
+        #self.pathNodeIds = pathNodeIds[:]
         self.pathNodeIds = pathNodeIds
         # Build path in link ids
         # Append tuple of nodes as links.
-        for i in range(len(pathNodeIds) - 1):
-            self.pathLinkIds.append((pathNodeIds[i], pathNodeIds[i + 1]))
+        for i in range(1, len(pathNodeIds)):
+            self.pathLinkIds.append((pathNodeIds[i - 1], pathNodeIds[i]))

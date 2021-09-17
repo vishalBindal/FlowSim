@@ -1,3 +1,5 @@
+__author__ = 'lich'
+
 import os
 
 for K in [8, 12, 16, 24]:

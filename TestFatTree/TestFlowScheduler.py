@@ -1,5 +1,5 @@
+__author__ = 'lich'
 import sys
-
 sys.path.append("..")
 
 from Src.FlowScheduler import *
@@ -7,7 +7,6 @@ from Src.Flow import *
 
 inDir = "Input/"
 outDir = "Output/"
-
 
 class TestFlowScheduler(FlowScheduler):
     def AssignFlows(self, args):
@@ -19,8 +18,10 @@ class TestFlowScheduler(FlowScheduler):
         self.mean = int(args[2])
         self.avgFlowNums = int(args[3])
         self.alpha = float(args[4])
-        f_name = inDir + "K%d_S%0.0f_L%d_a%d_flows.txt" \
-                         % (self.K, self.flowSize, self.mean, self.avgFlowNums)
+        #f_name = inDir + "K%d_S%0.0f_L%d_a%d_flows.txt" \
+        #         % (self.K, self.flowSize, self.mean, self.avgFlowNums)
+        # f_name = "K24_input_%0.1f.txt" % self.alpha
+        f_name = 'Input/Fbtraffic_modif.txt'
         f = open(f_name, "r")
         for line in f.readlines():
             l = line.split()
@@ -36,14 +37,14 @@ class TestFlowScheduler(FlowScheduler):
 
     def PrintFlows(self):
         f_name = outDir + "K%d_S%0.0f_L%d_a%0.1f_out.txt" \
-                          % (self.K, self.flowSize, self.mean, self.alpha)
+                 % (self.K, self.flowSize, self.mean, self.alpha)
         f = open(f_name, "w")
         f_name = outDir + "K%d_S%0.0f_L%d_a%0.1f_plot.dat" \
-                          % (self.K, self.flowSize, self.mean, self.alpha)
+                 % (self.K, self.flowSize, self.mean, self.alpha)
         f_plot = open(f_name, "w")
         for flow in self.finishedFlows:
             flowTransTime = flow.finishTime - flow.startTime
-            print >> f, "%d\t%f\t%f\t%f" % (flow.flowId, flowTransTime, flow.startTime, flow.finishTime)
+            print >> f, "flow %d used %f\t%f\t%f" % (flow.flowId, flowTransTime, flow.startTime, flow.finishTime)
             flow.bw = flow.flowSize / flowTransTime
         # print bandwidth (in Mbps) in each line with sorted format
         bwList = [flow.bw for flow in self.finishedFlows]

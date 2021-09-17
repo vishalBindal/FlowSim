@@ -1,7 +1,10 @@
+__author__ = 'lich'
+
 # This file describes the base class of node
 # All the specific node class should inherit this class
 
 class Node:
+
     def __init__(self):
         # node ID
         self.nodeId = -1
@@ -11,8 +14,6 @@ class Node:
 
         # current flows on this node, elements are flow id
         self.flowIds = []
-
-        self.qvalue = 0.0
 
     def __del__(self):
         pass

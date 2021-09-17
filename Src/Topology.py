@@ -1,15 +1,16 @@
-from Unit import *
+__author__ = 'lich'
 
+from Unit import *
 
 # This file describes the design of class Topology
 # Note that each node and link can be customized class by inherit Node and Link
 
 class Topology:
+
     def __init__(self):
         # node list in topology. Node id is also the index in list. node id is start from 1
         self.nodes = []
         # link list in topology. Indexed by the node id pair (start id, end id).
-        # this is a dict
         self.links = {}
 
     def CreateTopology(self):
@@ -17,7 +18,6 @@ class Topology:
         This function assigns the nodes and links.
         The parameter for this function could be a matrix or other things.
         """
-
     def SetAllCapacity(self, cap=1.0 * Gb):
         """
         Set capacity to all the links.
@@ -54,18 +54,6 @@ class Topology:
             print "Link id %d is not found" % linkId
             return None
 
-    def GetLinkFlowCount(self, linkId):
-        if linkId in self.links:
-            return len(self.links[linkId].flowIds)
-        else:
-            print "Link id %d is not found" % linkId
-            return None
-
-    def GetLinkOfLeastFlow(self):
-        md = dict([(self.links[l].linkId, len(self.links[l].flowIds))
-                   for l in self.GetLinks()])
-        return min(md, key=md.get)
-
     def GenTopoFromMatrix(self, topoMatrix, n, NodeType, LinkType):
         """
         topoMatrix is a n*n adjcent matrix.
@@ -76,9 +64,18 @@ class Topology:
 
         for i in range(0, n):
             node = NodeType()
-            node.nodeId = i
+            node.nodeId = i + 1
             for j in range(0, n):
                 if topoMatrix[i][j] == 1:
-                    node.adjNodeIds.append(j)
-                    self.links[i, j] = LinkType((i, j))
+                    node.adjNodeIds.append(j + 1)
+                    self.links[i + 1, j + 1] = LinkType((i + 1, j + 1))
             self.nodes.append(node)
+
+        
+
+
+
+
+
+
+

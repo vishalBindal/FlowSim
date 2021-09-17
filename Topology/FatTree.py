@@ -1,5 +1,6 @@
-import sys
+__author__ = 'lich'
 
+import sys
 sys.path.append("..")
 
 from Src.Topology import *
@@ -10,7 +11,6 @@ SERVER = 0
 TOR = 1
 AGGR = 2
 CORE = 3
-
 
 class FatTree(Topology):
     def __init__(self, K=4):
@@ -26,7 +26,6 @@ class FatTree(Topology):
         self.CalAggrNums()
         # calculate core switch number
         self.CalCoreNums()
-        self.name = "fattree"
 
     def CreateTopology(self):
         # create nodes
@@ -61,7 +60,7 @@ class FatTree(Topology):
                 self.links[coreNodeId, aggrNodeId] = Link((coreNodeId, aggrNodeId))
 
     def CreateNodes(self):
-        # node id is start from 1
+         # node id is start from 1
         self.nodes.append(None)
         # append server node
         self.AddNodes(self.numOfServers)
@@ -107,6 +106,7 @@ class FatTree(Topology):
             neighborId = n
         return neighborId
 
+
     def GetPodId(self, rackId):
         return (rackId - 1) / (self.K / 2) + 1
 
@@ -125,7 +125,6 @@ class FatTree(Topology):
             return id + self.numOfServers + self.numOfToRs + self.numOfAggrs
         else:
             return 0
-
     # add n nodes to topology instance
     def AddNodes(self, n):
         for id in range(1, n + 1):
@@ -137,18 +136,16 @@ class FatTree(Topology):
     def GetServerNode(self, serverId):
         nodeId = self.ConvertToNodeId(serverId, SERVER)
         return self.nodes[nodeId]
-
     def GetToRNode(self, torId):
         nodeId = self.ConvertToNodeId(torId, TOR)
         return self.nodes[nodeId]
-
     def GetAggrNode(self, aggrId):
         nodeId = self.ConvertToNodeId(aggrId, AGGR)
         return self.nodes[nodeId]
-
     def GetCoreNode(self, coreId):
         nodeId = self.ConvertToNodeId(coreId, CORE)
         return self.nodes[nodeId]
+
 
     def __del__(self):
         pass

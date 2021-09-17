@@ -1,8 +1,9 @@
-import sys
+__author__ = 'lich'
 
+import sys
 sys.path.append("..")
 
-import getopt
+import random, getopt
 from RandomGenerator.Poisson import *
 from Src.Unit import *
 
@@ -28,7 +29,6 @@ for o, a in opts:
 
 inDir = "Input/"
 
-
 def FatTreeFlowInput():
     """
     This is function is used to generate flows launched in a fat-tree topology.
@@ -50,7 +50,6 @@ def FatTreeFlowInput():
             print >> f, "%d\t%d\t%d\t%f" % (startId, endId, flowSize, startTime)
 
     f.close()
-
 
 if __name__ == "__main__":
     FatTreeFlowInput()

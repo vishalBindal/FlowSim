@@ -1,8 +1,9 @@
-import sys
+__author__ = 'lich'
 
+import sys
 sys.path.append("..")
 
-import getopt
+import random, getopt
 from HDFS import *
 from RandomGenerator.PowerLaw import *
 from RandomGenerator.Poisson import *
@@ -105,7 +106,6 @@ def AllocateFlows(topo, hdfs, pl, ps):
 
     f.close()
 
-
 def main():
     """
     Now we just provide allocation function for power-law distribution in traditional HDFS distribution.
@@ -123,7 +123,6 @@ def main():
     ps = PoissonRand(mean=mean, bound=1.0 / mean * 10.0)
     # allocates flows
     AllocateFlows(topo, hdfs, pl, ps)
-
 
 if __name__ == "__main__":
     main()
