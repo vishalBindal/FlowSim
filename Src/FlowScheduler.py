@@ -52,7 +52,7 @@ class FlowScheduler:
         flow.updateTime = curTime
         
         pathInLink = flow.pathLinkIds
-        bw = 1.0 * Gb
+        bw = 1000000.0 * Gb # random large value
         for linkId in pathInLink:
             link = self.Links[linkId]
             curBw = link.linkCap / len(link.flowIds)

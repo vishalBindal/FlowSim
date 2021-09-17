@@ -21,7 +21,7 @@ class TestFlowScheduler(FlowScheduler):
             flow.startId = int(l[0])
             flow.endId = int(l[1])
             flow.SetFlowSize(float(l[2]))
-            flow.startTime = float(l[3])
+            flow.startTime = float(l[3]) - 2.0
             flow.flowId = len(self.flows) + 1
             self.flows.append(flow)
         FlowScheduler.AssignFlows(self)
@@ -33,7 +33,7 @@ class TestFlowScheduler(FlowScheduler):
         # f_name = outDir + "flowPlot.dat"
         # f_plot = open(f_name, "w")
         for flow in self.finishedFlows:
-            flowTransTime = flow.finishTime - flow.startTime
+            flowTransTime = flow.finishTime - flow.startTime + 1e-6 * len(flow.pathLinkIds)
         #     print >> f, "flow %d used %f\t%f\t%f" % (flow.flowId, flowTransTime, flow.startTime, flow.finishTime)
             flow.bw = (flow.flowSize / flowTransTime) / Gb
         # # print bandwidth (in Mbps) in each line with sorted format
@@ -42,6 +42,6 @@ class TestFlowScheduler(FlowScheduler):
         # num = len(bwList)
         # for i in range(num):
         #     print >> f_plot, "%f\t%f" % (bwList[i] / Mb, float(i + 1) / num)
-            print >> f, "%d %d %d %f" % (flow.startId, flow.endId, flow.flowSize / 8, flow.bw)
+            print >> f, "%d->%d %f %d" % (flow.startId, flow.endId, flow.bw, flow.flowSize / 8)
         f.close()
         # f_plot.close()
