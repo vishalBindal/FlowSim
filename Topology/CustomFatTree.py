@@ -17,8 +17,8 @@ num_core = 16
 num_pods = 5
 val_K = 8
 
-server_to_tor_link = 400.0 * Gb
-general_link = 100.0 * Gb
+server_to_tor_link = 100.0 * Gb
+general_link = 400.0 * Gb
 
 class CustomFatTree(Topology):
     def __init__(self):
