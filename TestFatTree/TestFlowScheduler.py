@@ -11,17 +11,9 @@ outDir = "Output/"
 class TestFlowScheduler(FlowScheduler):
     def AssignFlows(self, args):
         """
-        The args is a tuple containing: K, S, L, a, which are following the parameters in GenFlowInput.py
+        Args is the file name listing all flows
         """
-        self.K = int(args[0])
-        self.flowSize = float(args[1])
-        self.mean = int(args[2])
-        self.avgFlowNums = int(args[3])
-        self.alpha = float(args[4])
-        #f_name = inDir + "K%d_S%0.0f_L%d_a%d_flows.txt" \
-        #         % (self.K, self.flowSize, self.mean, self.avgFlowNums)
-        # f_name = "K24_input_%0.1f.txt" % self.alpha
-        f_name = 'Input/Fbtraffic_modif.txt'
+        f_name = args
         f = open(f_name, "r")
         for line in f.readlines():
             l = line.split()
@@ -36,21 +28,20 @@ class TestFlowScheduler(FlowScheduler):
         f.close()
 
     def PrintFlows(self):
-        f_name = outDir + "K%d_S%0.0f_L%d_a%0.1f_out.txt" \
-                 % (self.K, self.flowSize, self.mean, self.alpha)
+        f_name = outDir + "flowInfo.txt"
         f = open(f_name, "w")
-        f_name = outDir + "K%d_S%0.0f_L%d_a%0.1f_plot.dat" \
-                 % (self.K, self.flowSize, self.mean, self.alpha)
-        f_plot = open(f_name, "w")
+        # f_name = outDir + "flowPlot.dat"
+        # f_plot = open(f_name, "w")
         for flow in self.finishedFlows:
             flowTransTime = flow.finishTime - flow.startTime
-            print >> f, "flow %d used %f\t%f\t%f" % (flow.flowId, flowTransTime, flow.startTime, flow.finishTime)
-            flow.bw = flow.flowSize / flowTransTime
-        # print bandwidth (in Mbps) in each line with sorted format
-        bwList = [flow.bw for flow in self.finishedFlows]
-        bwList.sort()
-        num = len(bwList)
-        for i in range(num):
-            print >> f_plot, "%f\t%f" % (bwList[i] / Mb, float(i + 1) / num)
+        #     print >> f, "flow %d used %f\t%f\t%f" % (flow.flowId, flowTransTime, flow.startTime, flow.finishTime)
+            flow.bw = (flow.flowSize / flowTransTime) / Gb
+        # # print bandwidth (in Mbps) in each line with sorted format
+        # bwList = [flow.bw for flow in self.finishedFlows]
+        # bwList.sort()
+        # num = len(bwList)
+        # for i in range(num):
+        #     print >> f_plot, "%f\t%f" % (bwList[i] / Mb, float(i + 1) / num)
+            print >> f, "%d %d %d %f" % (flow.startId, flow.endId, flow.flowSize / 8, flow.bw)
         f.close()
-        f_plot.close()
+        # f_plot.close()
